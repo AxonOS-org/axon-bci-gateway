@@ -85,4 +85,5 @@ AxonOS is a neural operating system for human–AI symbiosis.
 This repository is one of its core protocol modules.
 
 Learn more:  
-https://github.com/AxonOS
+https://github.com/AxonOS-BCI
+
