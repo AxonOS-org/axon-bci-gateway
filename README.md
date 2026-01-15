@@ -1,146 +1,88 @@
-# The OpenBCI GUI
+# Axon Neural I/O  
+**Neural signal gateway for AxonOS**
 
-<p align="center">
-  <img alt="banner" src="/images/GUI-V4-Screenshot.jpg/" width="600">
-</p>
-<p align="center" href="">
-  Provide a stable and powerful interface for any OpenBCI device
-</p>
+![AxonOS](https://img.shields.io/badge/AxonOS-Protocol-blue)
+![BCI](https://img.shields.io/badge/BCI-Neural%20Interface-purple)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Active%20Development-orange)
 
-## Welcome!
+Axon Neural I/O is the **brain–signal input layer of AxonOS**.  
+It provides a standardized, hardware-agnostic interface between neural sensors (EEG, BCI devices) and the AxonOS cognitive core.
 
-First and foremost, Welcome! :tada: Willkommen! :confetti_ball: Bienvenue! :balloon::balloon::balloon:
+This module is based on the open-source OpenBCI stack (MIT License) and extended to serve as a **protocol-level neural gateway** for AxonOS.
 
-Thank you for visiting the OpenBCI GUI repository.
+---
 
-This document (the README file) is a hub to give you some information about the project. Jump straight to one of the sections below, or just scroll down to find out more.
+## What this module does
 
-* [What are we doing? (And why?)](#what-are-we-doing)
-* [Who are we?](#who-are-we)
-* [What do we need?](#what-do-we-need)
-* [How can you get involved?](#get-involved)
-* [Get in touch](#contact-us)
-* [Find out more](#find-out-more)
-* [Installing](#installing)
+Axon Neural I/O:
+- connects to EEG / BCI hardware  
+- streams raw neural data  
+- preprocesses and filters signals  
+- exposes them via a unified AxonOS protocol  
 
-## What are we doing?
+This allows AxonOS to treat brain signals as a **native input device**, just like keyboard or mouse — but at the neural level.
 
-### The problem
+---
 
-* OpenBCI device owners want to visualize their brainwaves!
-* Many of the researchers, hackers and students alike who purchase OpenBCI devices want to use them to acquire data as soon as their device arrives.
-* Users use macOS, Windows and Linux to acquire data
-* Users want to filter incoming data in real time
-* Users want to make their own experiments to test their awesome theories or duplicate state of the art research at home!
-* Users struggle to get prerequisites properly installed to get data on their own from OpenBCI Cyton and Ganglion.
-* Users want to stream data into their own custom applications such as MATLAB.
+## Position in AxonOS architecture
 
-So, if even the very best researchers and hackers buy OpenBCI, there is still a lot of work needed to be done to visualize the data.
+[ Brain / EEG Devices ]
+↓
+Axon Neural I/O ← THIS MODULE
+↓
+Axon Cognitive Core
+↓
+AI Co-Processing
+↓
+AxonOS Applications
 
-### The solution
+Axon Neural I/O is the **entry point** of the human mind into AxonOS.
 
-The OpenBCI GUI will:
+---
 
-* Visualize data from every OpenBCI device: 
-  * [Ganglion](https://shop.openbci.com/products/ganglion-board)
-  * [Cyton](https://shop.openbci.com/collections/frontpage/products/cyton-biosensing-board-8-channel),
-  * [Cyton with Daisy](https://shop.openbci.com/collections/frontpage/products/cyton-daisy-biosensing-boards-16-channel)
-* Run as a native application on macOS, Windows, and Linux.
-* Provide filters and other data processing tools to quickly clean raw data in real time
-* Provide a networking system to move data out of GUI into other apps over UDP, OSC, LSL, and Serial.
-* Provide a widget framework that allows users to create their own experiments.
-* Provide the ability to output data into a saved file for later offline processing.
+## Why this exists
 
+Current BCI software is built for:
+- experiments  
+- labs  
+- single-purpose tools  
 
-Using the OpenBCI GUI allows you, the user, to quickly visualize and use your OpenBCI device. Further it should allow you to build on our powerful framework to implement your own great ideas!
+AxonOS requires:
+- real-time neural streams  
+- protocol-grade reliability  
+- hardware abstraction  
+- secure cognitive data flow  
 
-## Who are we?
+This module bridges that gap.
 
-Mainly, we are OpenBCI. The original code writer was Chip Audette, along with Conor Russomanno and Joel Murphy. AJ Keller, Gabriel Diaz, Daniel Lasry, and Richard Waltman and  have all made major contributions as well. 
+---
 
-## What do we need?
+## Licensing
 
-**You**! In whatever way you can help.
+This project is based on **OpenBCI** software licensed under the MIT License.
 
-We need expertise in programming, user experience, software sustainability, documentation and technical writing and project management.
+All modifications, extensions, and AxonOS integrations are also released under MIT, preserving full legal compatibility and commercial usability.
 
-We'd love your feedback along the way.
+---
 
-Our primary goal is to provide a stable and powerful interface for any OpenBCI device, and we're excited to support the professional development of any and all of our contributors. If you're looking to learn to code, try out working collaboratively, or translate you skills to the digital domain, we're here to help.
+## Status
 
-## Get involved
+This module is under active development as part of the **AxonOS Neural Stack**.
 
-If you think you can help in any of the areas listed above (and we bet you can) or in any of the many areas that we haven't yet thought of (and here we're *sure* you can) then please check out our [contributors' guidelines](CONTRIBUTING.md) and our [roadmap](ROADMAP.md).
+Roadmap:
+- Hardware abstraction layer  
+- AxonOS signal protocol  
+- Secure streaming to Cognitive Core  
+- AI-ready neural data pipelines  
 
-Please note that it's very important to us that we maintain a positive and supportive environment for everyone who wants to participate. When you join us we ask that you follow our [code of conduct](CODE_OF_CONDUCT.md) in all interactions both on and offline.
+---
 
+## AxonOS
 
-## Contact us
+AxonOS is a neural operating system for human–AI symbiosis.
 
-If you want to report a problem or suggest an enhancement, we'd love for you to [open an issue](../../issues) at this github repository so we can get right on it!
+This repository is one of its core protocol modules.
 
-## Find out more
-
-You might be interested in:
-
-* A tutorial to [make your own GUI Widget](https://docs.openbci.com/Software/OpenBCISoftware/GUIWidgets/#custom-widget)
-* Purchase any one of the devices from our website [OpenBCI](https://shop.openbci.com/collections/frontpage): 
-  * [Ganglion](https://shop.openbci.com/products/ganglion-board)
-  * [Cyton](https://shop.openbci.com/collections/frontpage/products/cyton-biosensing-board-8-channel)
-  * [Cyton with Daisy](https://shop.openbci.com/collections/frontpage/products/cyton-daisy-biosensing-boards-16-channel)
-
-And of course, you'll want to know our:
-* [Contributors' guidelines](CONTRIBUTING.md)
-* [Roadmap](ROADMAP.md)
-
-## Thank you
-
-Thank you so much (Danke schön! Merci beaucoup!) for visiting the project and we do hope that you'll join us on this amazing journey to provide a stable and powerful interface for any OpenBCI device.
-
-## Installing
-
-Follow the guide to [run the OpenBCI GUI From Processing IDE](https://docs.openbci.com/Software/OpenBCISoftware/GUIDocs/#running-the-openbci-gui-from-the-processing-ide). If you find issues in the guide, please [suggest changes](https://github.com/OpenBCI/Docs/edit/master/OpenBCI%20Software/01-OpenBCI_GUI.md)!
-
-**Note: Now compatible with Processing 4!**
-
-### System Requirements
-#### Hardware
-- 1.6 GHz or faster processor
-- 2 GB of RAM
-- 400 MB of hard drive space (minimum)
-
-#### Platforms
-OpenBCI GUI has been tested on the following platforms:
-- OS X 10.15.7 or later
-- Windows 8.1, 10, and 11 (64-bit)
-- Linux Ubuntu Desktop 18 or later
-
-OpenGL acceleration is required.
-
-## Troubleshooting
-- **When making an issue here on GitHub, please use an Issue or New Feature Template.** Otherwise, the issue will be closed and you will be asked to make a new issue using a template. This maintains a standard of communication and helps resolve issues in a timely manner.
-
-- If you are on a Mac and you seem to get a "spinning wheel of death" when trying to open a dialog box to view files (example "SELECT PLAYBACK FILE" button), [please update your Java Runtime Environment](https://www.java.com/en/download/). This happens because Java was not packaged with a version of the GUI producing this error.
-
-- For more on GUI troubleshooting, head over to the [GUI Troublshooting Doc](https://docs.openbci.com/Troubleshooting/GUI_Troubleshooting/).
-
-## Diagram
-
-Here is a Work-in-progress diagram outlining the most important parts of the GUI. Created using https://app.diagrams.net/.
-
-<p align="center">
-  <img alt="banner" src="OpenBCI%20GUI%20Diagram.drawio.png" width="600">
-</p>
-
-## <a name="license"></a> License:
-
-MIT
-
-## Links
-
-- [OpenBCI Main Site](https://www.openbci.com)
-- [Ganglion Board](https://shop.openbci.com/collections/frontpage/products/pre-order-ganglion-board)
-- [Cyton Board](https://shop.openbci.com/collections/frontpage/products/cyton-biosensing-board-8-channel)
-- [Cyton+Daisy Boards](https://shop.openbci.com/collections/frontpage/products/cyton-daisy-biosensing-boards-16-channel)
-- [GUI Widget Tutorial](https://docs.openbci.com/Software/OpenBCISoftware/GUIWidgets/#custom-widget)
-- [Run GUI from Processing IDE](https://docs.openbci.com/Software/OpenBCISoftware/GUIDocs/#running-the-openbci-gui-from-the-processing-ide)
+Learn more:  
+https://github.com/AxonOS
