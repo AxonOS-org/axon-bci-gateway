@@ -1,89 +1,33 @@
-# Axon Neural I/O  
-**Neural signal gateway for AxonOS**
+# AxonOS — OpenBCI_GUI Integration Fork
 
-![AxonOS](https://img.shields.io/badge/AxonOS-Protocol-blue)
-![BCI](https://img.shields.io/badge/BCI-Neural%20Interface-purple)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Status](https://img.shields.io/badge/Status-Active%20Development-orange)
+> This is an integration fork of [OpenBCI_GUI](https://github.com/OpenBCI/OpenBCI_GUI), maintained for compatibility testing between AxonOS and OpenBCI Cyton / Ganglion hardware.
+>
+> **Looking for the main AxonOS project?** → [axonos.org](https://axonos.org)
 
-Axon Neural I/O is the **brain–signal input layer of AxonOS**.  
-It provides a standardized, hardware-agnostic interface between neural sensors (EEG, BCI devices) and the AxonOS cognitive core.
+## About AxonOS
 
-This module is based on the open-source OpenBCI stack (MIT License) and extended to serve as a **protocol-level neural gateway** for AxonOS.
+AxonOS is an open-source real-time neural operating system for brain–computer interfaces — built in Rust `#![no_std]` on ARMv8-M, with sub-millisecond hard real-time guarantees for closed-loop BCI signal processing. Often described as *"Linux for the brain,"* AxonOS provides the foundational platform layer that clinical and research BCI applications run on top of.
 
----
+### Core technical specifications
 
-## What this module does
+- **Compute:** Dual-core — STM32F407 M4F @ 168 MHz (DSP) + Cortex-A53 @ 1.2 GHz (App), shared-SRAM IPC ≤ 0.2 µs
+- **Front-end:** ADS1299 8-channel 24-bit @ 250 SPS, ISO7741 5 kV medical isolation
+- **Real-time:** WCRT 972 µs measured over 12 h / 10.8 M epochs, zero deadline misses; jitter 2.1 µs σ, 6.5 µs P99.9
+- **Classification:** 82.4 % 4-class (full calibration), 91.7 % 2-class (ZeroCalib, ~70 s warmup)
+- **Security:** ATECC608B secure element, NIST SP 800-90B RNG, Cognitive Hypervisor on TrustZone-S
+- **Power:** 300–500 mW; ~4 h autonomy on 800 mAh LiPo
+- **Wireless:** nRF52840 BLE 5.3, Neural PTP clock sync (±18 µs over BLE mesh)
 
-Axon Neural I/O:
-- connects to EEG / BCI hardware  
-- streams raw neural data  
-- preprocesses and filters signals  
-- exposes them via a unified AxonOS protocol  
+### Why this fork
 
-This allows AxonOS to treat brain signals as a **native input device**, just like keyboard or mouse — but at the neural level.
+We use this fork to validate AxonOS's intent-classification and ZeroCalib pipelines against live OpenBCI Cyton / Ganglion data streams during hardware-in-the-loop testing. Modifications are intentionally minimal — see commits ahead of `OpenBCI/OpenBCI_GUI:master`. Full credit for OpenBCI_GUI belongs to the OpenBCI team; this is not redistributed as a product.
 
----
+## Links
 
-## Position in AxonOS architecture
+- Project: [axonos.org](https://axonos.org)
+- Technical writing (38+ articles): [medium.com/@AxonOS](https://medium.com/@AxonOS)
+- Contact: **axonosorg@gmail.com**
 
-[ Brain / EEG Devices ]
-↓
-Axon Neural I/O ← THIS MODULE
-↓
-Axon Cognitive Core
-↓
-AI Co-Processing
-↓
-AxonOS Applications
+## License
 
-Axon Neural I/O is the **entry point** of the human mind into AxonOS.
-
----
-
-## Why this exists
-
-Current BCI software is built for:
-- experiments  
-- labs  
-- single-purpose tools  
-
-AxonOS requires:
-- real-time neural streams  
-- protocol-grade reliability  
-- hardware abstraction  
-- secure cognitive data flow  
-
-This module bridges that gap.
-
----
-
-## Licensing
-
-This project is based on **OpenBCI** software licensed under the MIT License.
-
-All modifications, extensions, and AxonOS integrations are also released under MIT, preserving full legal compatibility and commercial usability.
-
----
-
-## Status
-
-This module is under active development as part of the **AxonOS Neural Stack**.
-
-Roadmap:
-- Hardware abstraction layer  
-- AxonOS signal protocol  
-- Secure streaming to Cognitive Core  
-- AI-ready neural data pipelines  
-
----
-
-## AxonOS
-
-AxonOS is a neural operating system for human–AI symbiosis.
-
-This repository is one of its core protocol modules.
-
-Learn more:  
-https://github.com/AxonOS-BCI
-
+This fork preserves the upstream OpenBCI_GUI license. AxonOS's own crates (`axonos-consent`, `axonos-intent`, etc.) live in separate repositories and are dual-licensed Apache-2.0 / MIT unless noted otherwise.
