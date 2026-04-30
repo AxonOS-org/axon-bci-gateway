@@ -1,37 +1,59 @@
-# Contributing
+# Contributing to AxonOS BCI Gateway
 
-:tada::clinking_glasses:  First off, thanks for taking the time to contribute! :tada::clinking_glasses:
+Thank you for considering a contribution.
 
-Contributions are always welcome, no matter how small.
+## What kind of contributions are welcome
 
-The following is a small set of guidelines for how to contribute to the project
+This repository is a thin integration fork of OpenBCI_GUI. Contributions
+that make sense here:
 
-## Where to start
+- Bug fixes specific to the AxonOS integration (networking identifiers, LSL
+  stream naming, OSC routing)
+- Documentation updates
+- CI improvements
 
-### Code of Conduct
-This project adheres to the Contributor Covenant [Code of Conduct](CODE_OF_CONDUCT.md).
-By participating you are expected to adhere to these expectations. Please report unacceptable behaviour to [support@openbci.com](mailto:support@openbci.com).
+Contributions that belong upstream:
 
-### Contributing on Github
+- Changes to signal processing, hardware communication, or core GUI logic —
+  please open these against [OpenBCI/OpenBCI_GUI](https://github.com/OpenBCI/OpenBCI_GUI)
+  directly.
 
-If you're new to Git and want to learn how to fork this repo, make your own additions, and include those additions in the master version of this project, check out this [great tutorial](http://blog.davidecoppola.com/2016/11/howto-contribute-to-open-source-project-on-github/).
+## Workflow
 
-### Community
+1. Fork the repository.
+2. Create a branch from `master`:
 
-This project is maintained by the [OpenBCI](https://openbci.com) community. Join the [OpenBCI Forum](https://openbci.com/forum/), where discussions about OpenBCI takes place.
+   ```bash
+   git checkout -b fix/describe-your-change
+   ```
 
-## How can I contribute?
+3. Make your changes.
+4. Verify the branding consistency checks pass locally:
 
-This is currently a small, humble project so our contribution process is rather casual. If there's a feature you'd be interested in building, go ahead! Let us know on the [OpenBCI Forum](https://openbci.com/forum/) or [open an issue](../../issues) so others can follow along and we'll support you as much as we can. When you're finished submit a pull request to the master branch referencing the specific issue you addressed.
+   ```bash
+   grep -q "axonos-gateway" OpenBCI_GUI/NetworkStreamOut.pde
+   grep -q "/axonos"         OpenBCI_GUI/W_Networking.pde
+   grep -q "AxonOS-org"      LICENSE
+   ```
 
-If you find a bug, or have a suggestion on how to improve the project, please fill out a [Github issue](../../issues).
+5. Commit with a descriptive message and push.
+6. Open a Pull Request against `master` with a clear description of what
+   changed and why.
 
-### Steps to Contribute
+## Reporting issues
 
-1. Fork it!
-2. Branch off of `development`: `git checkout development`
-3. Create your feature branch: `git checkout -b my-new-feature`
-4. Make changes
-5. Commit your changes: `git commit -m 'Add some feature'`
-6. Push to the branch: `git push origin my-new-feature`
-7. Submit a pull request. Make sure it is based off of the `development` branch when submitting! :D
+Please use [GitHub Issues](../../issues). Include:
+
+- OS and Processing version
+- Board type (Cyton / Ganglion / Synthetic)
+- Steps to reproduce
+- Relevant console output
+
+## Code of conduct
+
+Be direct and professional. No harassment, no spam.
+
+## Contact
+
+- Main project: [axonos.org](https://axonos.org)
+- Email: [info@axonos.org](mailto:info@axonos.org)

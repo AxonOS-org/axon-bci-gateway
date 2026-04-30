@@ -1,33 +1,102 @@
-# AxonOS — OpenBCI_GUI Integration Fork
+# AxonOS BCI Gateway
 
-> This is an integration fork of [OpenBCI_GUI](https://github.com/OpenBCI/OpenBCI_GUI), maintained for compatibility testing between AxonOS and OpenBCI Cyton / Ganglion hardware.
->
-> **Looking for the main AxonOS project?** → [axonos.org](https://axonos.org)
+> Integration fork of [OpenBCI_GUI v6.0.0-beta.1](https://github.com/OpenBCI/OpenBCI_GUI),
+> maintained by [AxonOS-org](https://axonos.org) for hardware-in-the-loop testing
+> with the AxonOS real-time neural kernel.
 
-## About AxonOS
+**Looking for the main AxonOS project?** → [axonos.org](https://axonos.org)  
+**Engineering RFCs and architecture?** → [github.com/AxonOS-org/axonos-rfcs](https://github.com/AxonOS-org/axonos-rfcs)
 
-AxonOS is an open-source real-time neural operating system for brain–computer interfaces — built in Rust `#![no_std]` on ARMv8-M, with sub-millisecond hard real-time guarantees for closed-loop BCI signal processing. Often described as *"Linux for the brain,"* AxonOS provides the foundational platform layer that clinical and research BCI applications run on top of.
+---
 
-### Core technical specifications
+## What this is
 
-- **Compute:** Dual-core — STM32F407 M4F @ 168 MHz (DSP) + Cortex-A53 @ 1.2 GHz (App), shared-SRAM IPC ≤ 0.2 µs
-- **Front-end:** ADS1299 8-channel 24-bit @ 250 SPS, ISO7741 5 kV medical isolation
-- **Real-time:** WCRT 972 µs measured over 12 h / 10.8 M epochs, zero deadline misses; jitter 2.1 µs σ, 6.5 µs P99.9
-- **Classification:** 82.4 % 4-class (full calibration), 91.7 % 2-class (ZeroCalib, ~70 s warmup)
-- **Security:** ATECC608B secure element, NIST SP 800-90B RNG, Cognitive Hypervisor on TrustZone-S
-- **Power:** 300–500 mW; ~4 h autonomy on 800 mAh LiPo
-- **Wireless:** nRF52840 BLE 5.3, Neural PTP clock sync (±18 µs over BLE mesh)
+This gateway provides a Processing-based GUI for streaming EEG data from
+OpenBCI Cyton / Ganglion hardware into the AxonOS signal pipeline. It is
+intentionally kept close to upstream OpenBCI_GUI to minimise maintenance
+burden. AxonOS-specific changes are limited to networking identifiers, branding,
+and documentation pointers — see [CHANGELOG.md](CHANGELOG.md) for the full diff.
 
-### Why this fork
+This repository is **not** a reimplementation of OpenBCI_GUI. All signal
+acquisition, hardware communication, and GUI logic is OpenBCI's work,
+licensed under MIT (see [LICENSE](LICENSE)).
 
-We use this fork to validate AxonOS's intent-classification and ZeroCalib pipelines against live OpenBCI Cyton / Ganglion data streams during hardware-in-the-loop testing. Modifications are intentionally minimal — see commits ahead of `OpenBCI/OpenBCI_GUI:master`. Full credit for OpenBCI_GUI belongs to the OpenBCI team; this is not redistributed as a product.
+---
 
-## Links
+## Quick start
 
-- Project: [axonos.org](https://axonos.org)
-- Technical writing (38+ articles): [medium.com/@AxonOS](https://medium.com/@AxonOS)
-- Contact: **axonosorg@gmail.com**
+**Requirements:** [Processing 4](https://processing.org/download) with the
+following libraries (install via Processing → Tools → Manage Libraries):
+`ControlP5`, `G4P`, `gwoptics`, `BrainFlow`.
+
+```bash
+# 1. Clone
+git clone https://github.com/AxonOS-org/axon-bci-gateway.git
+cd axon-bci-gateway
+
+# 2. Open in Processing
+# File → Open → OpenBCI_GUI/OpenBCI_GUI.pde
+
+# 3. Run (⌘R / Ctrl+R)
+```
+
+When running, the LSL stream identifier is `axonos-gateway` and the OSC
+base address is `/axonos`. Configure your AxonOS pipeline consumer accordingly.
+
+---
+
+## Version
+
+| Field | Value |
+|---|---|
+| Gateway version | `v1.0.0-axonos` |
+| Based on upstream | OpenBCI_GUI `v6.0.0-beta.1` |
+| AxonOS SDK | [axonos-sdk v0.1.1](https://github.com/AxonOS-org/axonos-sdk) |
+
+---
+
+## AxonOS reference target
+
+The gateway is tested against the AxonOS reference hardware:
+
+| Component | Part |
+|---|---|
+| ADC | ADS1299 · 8-channel · 24-bit · 250 SPS |
+| DSP core | STM32F407 Cortex-M4F · 168 MHz |
+| Wireless | nRF52840 · BLE 5.3 |
+
+For pipeline timing specifications (WCET, WCRT, validation evidence levels),
+see [RFC-0004](https://github.com/AxonOS-org/axonos-rfcs/blob/main/rfcs/0004-dual-core-real-time-contract.md)
+and the [AxonOS validation framework (RFC-0003)](https://github.com/AxonOS-org/axonos-rfcs/blob/main/rfcs/0003-validation-status-framework.md).
+Performance numbers are tagged by evidence level (L1/L2/L3) — not standalone
+marketing claims.
+
+---
+
+## Changes from upstream
+
+See [CHANGELOG.md](CHANGELOG.md) for a complete list of modifications.
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+---
 
 ## License
 
-This fork preserves the upstream OpenBCI_GUI license. AxonOS's own crates (`axonos-consent`, `axonos-intent`, etc.) live in separate repositories and are dual-licensed Apache-2.0 / MIT unless noted otherwise.
+This fork preserves the upstream MIT license in full.  
+Copyright (c) 2018 OpenBCI — original work.  
+Copyright (c) 2024–2026 AxonOS-org — modifications listed in CHANGELOG.md.
+
+See [LICENSE](LICENSE) for the complete text.
+
+---
+
+## Contact
+
+- Website: [axonos.org](https://axonos.org)
+- General: [info@axonos.org](mailto:info@axonos.org)
+- Bugs and PRs: [GitHub Issues](../../issues)
