@@ -1,57 +1,88 @@
 # Changelog
 
-All notable changes to the AxonOS BCI Gateway fork relative to upstream
-[OpenBCI_GUI](https://github.com/OpenBCI/OpenBCI_GUI).
+All notable AxonOS-fork-specific changes to this project are documented
+in this file. Upstream OpenBCI_GUI changes are NOT duplicated here —
+see the [upstream CHANGELOG](https://github.com/OpenBCI/OpenBCI_GUI/blob/master/CHANGELOG.md).
 
-Upstream base: **OpenBCI_GUI v6.0.0-beta.1**
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this fork adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
+with the suffix `-axonos` to distinguish from upstream releases.
 
 ---
 
-## [1.0.0-axonos] — 2026-04-30
+## [Unreleased]
 
 ### Added
-- `Copyright (c) 2024–2026 AxonOS-org` line to LICENSE (alongside original
-  OpenBCI copyright — both preserved as required by MIT).
-- `.gitignore` covering Processing/Java build artifacts, IDE files, OS files,
-  and session data.
-- This CHANGELOG.
-- `.github/workflows/ci.yml` — branding consistency checks on push and PR.
+- This CHANGELOG file (was previously implicit via git history).
 
 ### Changed
-- **Application version string:** `v6.0.0-beta.1` → `v1.0.0-axonos`
-  (`OpenBCI_GUI/OpenBCI_GUI.pde`)
-- **Version date:** `September 2023` → `April 2026`
-  (`OpenBCI_GUI/OpenBCI_GUI.pde`)
-- **Startup message:** `Welcome to the Processing-based OpenBCI GUI!` →
-  `Welcome to the AxonOS BCI Gateway!`
-  (`OpenBCI_GUI/OpenBCI_GUI.pde`)
-- **Documentation URL:** `docs.openbci.com/Software/OpenBCISoftware/GUIDocs/` →
-  `axonos.org/docs`
-  (`OpenBCI_GUI/OpenBCI_GUI.pde`)
-- **Release API URL:** `api.github.com/repos/OpenBCI/OpenBCI_GUI/releases/latest` →
-  `api.github.com/repos/AxonOS-org/axon-bci-gateway/releases/latest`
-  (`OpenBCI_GUI/OpenBCI_GUI.pde`)
-- **GitHub release URL:** `github.com/OpenBCI/OpenBCI_GUI/releases/latest` →
-  `github.com/AxonOS-org/axon-bci-gateway/releases/latest`
-  (`OpenBCI_GUI/OpenBCI_GUI.pde`)
-- **LSL stream identifier:** `openbcigui` → `axonos-gateway`
-  (`OpenBCI_GUI/NetworkStreamOut.pde`)
-- **OSC base address:** `/openbci` → `/axonos`
-  (`OpenBCI_GUI/W_Networking.pde`)
-- **LSL default stream names:** `obci_eeg1/2/3` → `axon_eeg1/2/3`
-  (`OpenBCI_GUI/W_Networking.pde`)
-- **Networking guide URL:** `docs.openbci.com/...GUIWidgets/#networking` →
-  `axonos.org/docs/networking`
-  (`OpenBCI_GUI/W_Networking.pde`)
-- **Data outputs URL:** Google Docs link → `axonos.org/docs/data-outputs`
-  (`OpenBCI_GUI/W_Networking.pde`)
-- **README.md** rewritten: AxonOS context, RFC links, clean attribution.
-- **CONTRIBUTING.md** rewritten: AxonOS-org workflow (`master` branch),
-  removed all references to `support@openbci.com` and `OpenBCI Forum`.
+- README rewritten with AxonOS unified visual standard (badges, footer,
+  attribution to Denis Yermakou as fork maintainer).
+- CONTRIBUTING.md rewritten to clarify upstream-vs-fork contribution paths.
 
-### Known limitations
-- Upstream OpenBCI_GUI `v6.0.0-beta.1` bugs are inherited. Substantive fixes
-  should be contributed to [OpenBCI/OpenBCI_GUI](https://github.com/OpenBCI/OpenBCI_GUI)
-  upstream.
-- No Processing build verification in CI (Processing headless builds are
-  non-trivial; CI currently checks branding consistency only).
+---
+
+## [v1.0.0-axonos] — 2024-Q1
+
+Initial AxonOS fork from [OpenBCI_GUI v6.0.0-beta.1](https://github.com/OpenBCI/OpenBCI_GUI/releases/tag/v6.0.0-beta.1).
+
+### AxonOS-specific changes vs upstream
+
+#### Added
+- `NOTICE` file with full attribution to OpenBCI upstream and AxonOS-side
+  modifications (Denis Yermakou).
+- `CHANGELOG.md` (this file) tracking AxonOS-specific diff.
+- `.github/workflows/ci.yml` with link-check, markdownlint, actionlint,
+  yamllint, java-syntax-check, and license-header job.
+- `.github/markdown-link-check.json` configuration for link verification.
+- AxonOS reference-hardware compatibility table in README.
+
+#### Changed
+- **Networking identifiers** to integrate with the AxonOS pipeline:
+  - LSL stream identifier: `OpenBCI_EEG` → `axonos-gateway`
+  - OSC base address: `/openbci` → `/axonos`
+- **Branding** in window titles, splash screen, and About dialog:
+  - "OpenBCI GUI" → "AxonOS BCI Gateway (based on OpenBCI_GUI)"
+  - Where appropriate, attribution to both OpenBCI and AxonOS-org.
+- **README.md** updated:
+  - AxonOS branding header
+  - Pointers to axonos.org, axonos-rfcs, AxonOS-kernel, AxonOS-sdk
+  - Compatibility section for AxonOS reference hardware
+- **CONTRIBUTING.md** updated to direct upstream-relevant changes to
+  OpenBCI_GUI and fork-relevant changes here.
+
+#### Preserved (unchanged from upstream)
+- All signal acquisition logic
+- All hardware communication code
+- All GUI widget code
+- All BrainFlow integration
+- The upstream MIT licence in full
+- Original copyright notices in source files
+
+#### Maintainer note
+
+The fork is **intentionally minimal**. Any change touching upstream OpenBCI
+source must justify itself as integration-only — if it improves OpenBCI
+behaviour generally, it belongs upstream first. This keeps rebasing against
+future OpenBCI_GUI releases tractable.
+
+---
+
+## Versioning policy
+
+| Tag             | Meaning |
+|:----------------|:--------|
+| `vX.Y.Z`        | upstream OpenBCI_GUI release (preserved verbatim) |
+| `vX.Y.Z-axonos` | AxonOS fork release based on upstream `vX.Y.Z` |
+| `vX.Y.Z-axonos.N` | Nth AxonOS-side patch on top of upstream `vX.Y.Z` |
+
+Examples:
+- `v6.0.0-beta.1` — base upstream release this fork started from
+- `v1.0.0-axonos` — initial AxonOS fork release
+- `v1.0.0-axonos.1` — first AxonOS patch on top of the initial fork
+- `v6.1.0-axonos` — fork rebased against future upstream `v6.1.0`
+
+---
+
+**Maintainer:** Denis Yermakou · [denis@axonos.org](mailto:denis@axonos.org)
+[github.com/AxonOS-org](https://github.com/AxonOS-org) · [axonos.org](https://axonos.org)
