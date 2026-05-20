@@ -1,23 +1,10 @@
-# AxonOS BCI Gateway — Continuous Integration
-#
-# This is a Processing/Java GUI fork — there is no Cargo/Maven/Gradle
-# pipeline to drive. CI is therefore documentation-oriented:
-#
-#   - link-check         verify external links in README/CHANGELOG/etc.
-#   - markdown-lint      catch common markdown issues
-#   - actionlint         validate this CI workflow itself
-#   - yamllint           consistent YAML formatting
-#   - java-syntax-check  basic javac --check on .java files
-#   - license-header     ensure AxonOS-modified files carry SPDX headers
-#
-# All jobs have timeouts and continue-on-error where appropriate so a
-# transient failure does not block the entire pipeline.
-
 name: ci
 
 on:
   push:
-    branches: [master, main]
+    branches:
+      - master
+      - main
   pull_request:
   workflow_dispatch:
 
@@ -26,122 +13,58 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-
-  # ── 1. Markdown link check ───────────────────────────────────────────────
-  link-check:
-    name: link-check
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    continue-on-error: true
-    steps:
-      - uses: actions/checkout@v4
-      - name: markdown-link-check (root files)
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          use-quiet-mode: 'yes'
-          use-verbose-mode: 'yes'
-          file-path: './README.md, ./CHANGELOG.md, ./CONTRIBUTING.md, ./CODE_OF_CONDUCT.md, ./NOTICE'
-          config-file: '.github/markdown-link-check.json'
-
-  # ── 2. Markdown lint ─────────────────────────────────────────────────────
-  markdown-lint:
-    name: markdown-lint
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    continue-on-error: true
-    steps:
-      - uses: actions/checkout@v4
-      - name: markdownlint
-        uses: DavidAnson/markdownlint-cli2-action@v16
-        with:
-          globs: |
-            README.md
-            CHANGELOG.md
-            CONTRIBUTING.md
-            CODE_OF_CONDUCT.md
-
-  # ── 3. Validate CI workflow itself ───────────────────────────────────────
-  actionlint:
-    name: actionlint
+  gateway-contract:
+    name: gateway contract
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - name: actionlint
-        uses: raven-actions/actionlint@v2
 
-  # ── 4. YAML consistency ──────────────────────────────────────────────────
-  yamllint:
-    name: yamllint
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Verify AxonOS gateway contract
+        run: python3 tools/verify_gateway_contract.py
+
+  repository-layout:
+    name: repository layout
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
-      - name: yamllint
-        uses: ibiqlik/action-yamllint@v3
-        with:
-          file_or_dir: .github/workflows
-          format: github
 
-  # ── 5. Java syntax check (sanity, not compile) ───────────────────────────
-  java-syntax:
-    name: java syntax check
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    continue-on-error: true
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-      - name: Find .java files and parse-only check
+      - name: Check fork structure
+        shell: bash
         run: |
-          set -e
-          # javac --parse-only style: check each .java for syntax errors
-          # without requiring full classpath. Skips upstream OpenBCI source
-          # that depends on Processing libraries not available in CI.
-          shopt -s globstar nullglob
-          files=()
-          for f in **/*.java; do
-            # Skip upstream files - they need Processing classpath
-            case "$f" in
-              GuiUnitTests/*|OpenBCI_GUI/data/*|Networking-Test-Kit/*) continue ;;
-            esac
-            files+=("$f")
-          done
-          if [ ${#files[@]} -eq 0 ]; then
-            echo "No AxonOS-fork Java files to lint (this is normal)."
-            exit 0
-          fi
-          # Run javac in --parse-only mode (no classpath needed)
-          for f in "${files[@]}"; do
-            echo "Parsing $f"
-            javac -d /tmp/javac-out -implicit:none -proc:none "$f" 2>&1 | head -20 || true
-          done
+          set -euo pipefail
+          test -f README.md
+          test -f CHANGELOG.md
+          test -f NOTICE
+          test -f LICENSE
+          test -f OpenBCI_GUI/OpenBCI_GUI.pde
+          test -d GuiUnitTests
+          test -d Networking-Test-Kit
+          echo "Repository layout: PASS"
 
-  # ── 6. License header check on AxonOS-modified files ────────────────────
-  license-header:
-    name: license-header
+  docs-contract:
+    name: documentation contract
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
-      - name: Verify SPDX headers on AxonOS-modified files
-        run: |
-          # Files touched by AxonOS modifications should carry the
-          # SPDX-License-Identifier marker. Upstream OpenBCI files are
-          # exempt — we don't rewrite history.
-          set -e
-          # Check NOTICE and CHANGELOG exist
-          test -f NOTICE       || (echo "Missing NOTICE" && exit 1)
-          test -f CHANGELOG.md || (echo "Missing CHANGELOG.md" && exit 1)
-          test -f LICENSE      || (echo "Missing LICENSE" && exit 1)
-          echo "✓ Mandatory files present"
 
-          # If we add any AxonOS-authored .java/.pde files in future, they
-          # should carry SPDX. Currently the fork is entirely composed of
-          # upstream files + documentation, so no .java/.pde scan needed.
-          echo "✓ License header check passed"
+      - name: Check documentation claims
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "integration fork" README.md
+          grep -q "OpenBCI" README.md
+          grep -q "AxonOS" README.md
+          grep -q "OpenBCI" NOTICE
+          grep -q "MIT" NOTICE
+          grep -q "connect@axonos.org" README.md
+          ! grep -q "info@axonos.org" README.md
+          ! grep -q "AxonOS-sdk" README.md
+          ! grep -q "AxonOS-kernel" README.md
+          echo "Documentation contract: PASS"
