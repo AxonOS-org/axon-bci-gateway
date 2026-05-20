@@ -1,164 +1,253 @@
-<div align="center">
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/d/dd/Processing_2021_logo.svg" width="100" alt="Processing" />
-
 # AxonOS BCI Gateway
 
-### Neural signal acquisition layer for AxonOS — fork of OpenBCI_GUI v6.0.0-beta.1
+[![CI](https://github.com/AxonOS-org/axon-bci-gateway/actions/workflows/ci.yml/badge.svg)](https://github.com/AxonOS-org/axon-bci-gateway/actions/workflows/ci.yml)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Status](https://img.shields.io/badge/status-integration--fork-yellow)
+![Upstream](https://img.shields.io/badge/upstream-OpenBCI_GUI-blue)
+![Processing](https://img.shields.io/badge/Processing-4.x-006699)
 
-> Processing-based GUI bridge between OpenBCI Cyton/Ganglion hardware and the AxonOS real-time neural kernel. Maintained as an integration fork with minimal divergence from upstream.
+**OpenBCI GUI integration fork for AxonOS hardware-in-the-loop EEG acquisition and pipeline testing.**
 
-[![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](#license)
-[![Upstream](https://img.shields.io/badge/upstream-OpenBCI__GUI-blue?style=for-the-badge&logo=github&logoColor=white)](https://github.com/OpenBCI/OpenBCI_GUI)
-[![AxonOS Project](https://img.shields.io/badge/AxonOS--org-0E2A47?style=for-the-badge&logo=github&logoColor=white)](https://github.com/AxonOS-org)
+`axon-bci-gateway` is the hardware-facing gateway between OpenBCI-class EEG acquisition tools and the AxonOS real-time BCI stack.
 
-[![Processing](https://img.shields.io/badge/Processing-4.x-006699?style=flat-square)](https://processing.org/download)
-[![BrainFlow](https://img.shields.io/badge/BrainFlow-supported-success?style=flat-square)](https://brainflow.org)
-[![SDK](https://img.shields.io/badge/axonos--sdk-0.1.6-orange?style=flat-square)](https://github.com/AxonOS-org/AxonOS-sdk)
-[![Status](https://img.shields.io/badge/status-integration--fork-yellow?style=flat-square)](#about)
+This repository is intentionally conservative. It preserves the upstream OpenBCI GUI structure and limits AxonOS-specific changes to integration touchpoints: stream identifiers, OSC namespace, documentation, attribution, reference-hardware notes, and fork-integrity CI.
 
-[**About**](#about) · [**Quick start**](#quick-start) · [**Reference hardware**](#axonos-reference-target) · [**Changes**](./CHANGELOG.md) · [**Contributing**](./CONTRIBUTING.md) · [**License**](#license)
-
-</div>
+It is **not** a rewrite of OpenBCI GUI. Signal acquisition, hardware communication, GUI behavior, and BrainFlow integration remain upstream OpenBCI work under the MIT License.
 
 ---
 
-## About
+## Position in the AxonOS stack
 
-This gateway is an **integration fork** of [OpenBCI_GUI v6.0.0-beta.1](https://github.com/OpenBCI/OpenBCI_GUI),
-maintained by [AxonOS-org](https://axonos.org) for hardware-in-the-loop testing
-with the AxonOS real-time neural kernel.
+AxonOS is the deterministic operating layer between neural hardware and intelligent applications: an operating-system substrate for brain-computer interfaces.
 
-It is **intentionally kept close to upstream** to minimise maintenance burden. AxonOS-specific changes are limited to:
+Within that architecture, this repository sits at the acquisition boundary.
 
-- Networking identifiers (`LSL stream id = axonos-gateway`, `OSC base = /axonos`)
-- Branding in window titles and About dialog
-- Documentation pointers to AxonOS resources
-- AxonOS reference hardware compatibility notes
+| Layer | Repository | Role |
+|---|---|---|
+| Kernel substrate | [`axonos-kernel`](https://github.com/AxonOS-org/axonos-kernel) | Real-time scheduling, SPSC IPC, capability gate, monotonic time |
+| Specifications | [`axonos-rfcs`](https://github.com/AxonOS-org/axonos-rfcs) | RFCs, validation taxonomy, engineering contracts |
+| SDK boundary | [`axonos-sdk`](https://github.com/AxonOS-org/axonos-sdk) | Typed intents, manifests, ABI-compatible integration |
+| Consent layer | [`axonos-consent`](https://github.com/AxonOS-org/axonos-consent) | Deterministic consent and stimulation-gating state machine |
+| Mesh layer | [`axonos-swarm`](https://github.com/AxonOS-org/axonos-swarm) | Experimental distributed timing and peer health coordination |
+| Acquisition gateway | **`axon-bci-gateway`** | OpenBCI GUI integration fork for hardware-in-the-loop EEG input |
 
-For the complete diff against upstream, see [CHANGELOG.md](./CHANGELOG.md).
+The gateway is useful because it lets AxonOS interact with real EEG acquisition tools without pretending that the gateway itself is the safety-critical kernel.
 
-This repository is **not** a reimplementation. All signal acquisition,
-hardware communication, and GUI logic is OpenBCI's work, licensed under MIT
-(see [LICENSE](./LICENSE)).
+---
 
-> **Looking for the main AxonOS project?** → [axonos.org](https://axonos.org) · [github.com/AxonOS-org](https://github.com/AxonOS-org)
+## Scope
+
+AxonOS-specific scope is limited to:
+
+- LSL stream identifier convention: `axonos-gateway`;
+- OSC namespace convention: `/axonos`;
+- AxonOS documentation pointers;
+- reference-hardware compatibility notes;
+- attribution and fork-maintenance metadata;
+- CI checks that verify the fork contract.
+
+Out of scope:
+
+- changing OpenBCI acquisition behavior;
+- modifying board communication logic;
+- changing GUI widgets unrelated to AxonOS integration;
+- claiming regulatory or clinical readiness;
+- claiming that this fork is endorsed by OpenBCI, Inc.
+
+If a change improves OpenBCI GUI generally, it belongs upstream first.
+
+---
+
+## Gateway contract
+
+This repository has a narrower contract than the AxonOS kernel repositories.
+
+| Contract item | Meaning |
+|---|---|
+| Acquisition boundary | The fork preserves upstream OpenBCI GUI acquisition paths. |
+| AxonOS identity | AxonOS integration uses explicit stream and OSC naming conventions. |
+| Attribution | Upstream OpenBCI authorship and MIT licensing remain visible. |
+| No safety overclaim | Timing, WCET, WCRT, and regulatory claims are not made in this GUI fork. |
+| Fork hygiene | CI verifies structure, attribution, docs, and AxonOS scope. |
+
+This is an integration gateway, not a certified medical-device component and not a hard real-time kernel.
+
+---
 
 ## Quick start
 
-**Requirements:**
+Requirements:
 
 - [Processing 4](https://processing.org/download)
-- Processing libraries (install via **Tools → Manage Libraries**): `ControlP5`, `G4P`, `gwoptics`, `BrainFlow`
+- Processing libraries installed via **Tools → Manage Libraries**:
+  - `ControlP5`
+  - `G4P`
+  - `gwoptics`
+  - `BrainFlow`
+
+Clone and open:
 
 ```sh
-# 1. Clone
 git clone https://github.com/AxonOS-org/axon-bci-gateway.git
 cd axon-bci-gateway
-
-# 2. Open in Processing
-# File → Open → OpenBCI_GUI/OpenBCI_GUI.pde
-
-# 3. Run (⌘R / Ctrl+R)
 ```
 
-When running, the LSL stream identifier is `axonos-gateway` and the OSC
-base address is `/axonos`. Configure your AxonOS pipeline consumer accordingly.
+Then open in Processing:
 
-## Version
-
-| Field | Value |
-|:---|:---|
-| Gateway version | `v1.0.0-axonos` |
-| Based on upstream | OpenBCI_GUI `v6.0.0-beta.1` |
-| AxonOS SDK compatibility | [axonos-sdk v0.1.6](https://github.com/AxonOS-org/AxonOS-sdk) |
-| AxonOS Kernel compatibility | [AxonOS-kernel v0.1.9](https://github.com/AxonOS-org/AxonOS-kernel) |
-
-## AxonOS reference target
-
-The gateway is tested against the AxonOS reference hardware platform:
-
-| Component | Part |
-|:---|:---|
-| ADC | ADS1299 · 8-channel · 24-bit · 250 SPS |
-| DSP core | STM32F407 · Cortex-M4F · 168 MHz |
-| App core | Cortex-A53 · 1.2 GHz |
-| Wireless | nRF52840 · BLE 5.3 |
-| Secure element | ATECC608B |
-| Isolation | ISO7741 · 5 kV galvanic |
-
-For pipeline timing specifications (WCET, WCRT, validation evidence levels),
-see [RFC-0004](https://github.com/AxonOS-org/axonos-rfcs/blob/main/rfcs/0004-dual-core-real-time-contract.md)
-and the [AxonOS validation framework (RFC-0003)](https://github.com/AxonOS-org/axonos-rfcs/blob/main/rfcs/0003-validation-status-framework.md).
-Performance numbers are tagged by evidence level (L1/L2/L3) — not standalone marketing claims.
-
-## Repository structure
-
-```
-axon-bci-gateway/
-├── README.md                       ← this file
-├── CHANGELOG.md                    ← AxonOS-specific changes vs upstream
-├── CONTRIBUTING.md
-├── CODE_OF_CONDUCT.md
-├── LICENSE                         ← MIT (preserved from upstream)
-├── NOTICE                          ← attribution + AxonOS modifications
-├── .github/workflows/ci.yml        ← link check + actionlint
-├── OpenBCI_GUI/                    ← Processing source (unchanged structure)
-├── GuiUnitTests/                   ← upstream test suite
-├── Networking-Test-Kit/            ← upstream networking tests
-├── images/                         ← UI assets
-├── release/                        ← release artifacts
-└── tools/                          ← upstream tooling
+```text
+OpenBCI_GUI/OpenBCI_GUI.pde
 ```
 
-## Changes from upstream
+Run with `Ctrl+R` / `Cmd+R`.
 
-See [CHANGELOG.md](./CHANGELOG.md) for the complete list of modifications.
-The diff is intentionally small and limited to integration touchpoints.
+When running with the AxonOS integration configuration, downstream consumers should expect:
 
-## Contributing
-
-This fork accepts contributions that align with the AxonOS integration
-scope. For changes to OpenBCI core GUI behaviour, please contribute
-upstream to [OpenBCI/OpenBCI_GUI](https://github.com/OpenBCI/OpenBCI_GUI) first.
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md).
-
-## License
-
-This fork preserves the upstream **MIT License** in full.
-
-- Copyright © 2018 [Joel Murphy / OpenBCI](https://openbci.com) — original work
-- Copyright © 2024–2026 Denis Yermakou / AxonOS-org — modifications listed in CHANGELOG.md
-
-See [LICENSE](./LICENSE) for the complete text and [NOTICE](./NOTICE) for
-detailed attribution and the AxonOS trademark policy.
-
-## Related
-
-- **[AxonOS-kernel](https://github.com/AxonOS-org/AxonOS-kernel)** — the verifiable kernel substrate
-- **[AxonOS-sdk](https://github.com/AxonOS-org/AxonOS-sdk)** — application-side SDK
-- **[axonos-rfcs](https://github.com/AxonOS-org/axonos-rfcs)** — engineering specifications
-- **Project website:** [axonos.org](https://axonos.org)
-- **Long-form essays:** [medium.com/@AxonOS](https://medium.com/@AxonOS)
-
-## Contact
-
-- **General correspondence:** [info@axonos.org](mailto:info@axonos.org)
-- **Partnership and clinical engagement:** [connect@axonos.org](mailto:connect@axonos.org)
-- **Security disclosures:** [security@axonos.org](mailto:security@axonos.org)
-- **Bugs and pull requests:** [GitHub Issues](https://github.com/AxonOS-org/axon-bci-gateway/issues)
+| Channel | Value |
+|---|---|
+| LSL stream identifier | `axonos-gateway` |
+| OSC base namespace | `/axonos` |
 
 ---
 
-<div align="center">
+## Version and compatibility
 
-**Author and maintainer (AxonOS-side):** Denis Yermakou · [denis@axonos.org](mailto:denis@axonos.org)
+| Field | Value |
+|---|---|
+| Gateway status | Integration fork |
+| Base upstream | OpenBCI_GUI `v6.0.0-beta.1` |
+| Language/runtime | Processing / Java |
+| License | MIT |
+| AxonOS contact | `connect@axonos.org` |
 
-[axonos.org](https://axonos.org) · [medium.com/@AxonOS](https://medium.com/@AxonOS) · [github.com/AxonOS-org](https://github.com/AxonOS-org)
+Compatibility notes:
 
-Zurich · Berlin · Milano · San Mateo · Singapore
+- AxonOS kernel and SDK integration is evolving.
+- This repository does not define the AxonOS ABI.
+- Timing and safety claims belong in `axonos-kernel`, `axonos-rfcs`, and hardware validation artifacts, not in this GUI fork.
 
-<sub>The gateway is how the kernel earns the right to see real brain signals.</sub>
+---
 
-</div>
+## Reference hardware context
+
+The gateway is intended for hardware-in-the-loop testing around the AxonOS reference platform.
+
+| Component | Reference part |
+|---|---|
+| EEG ADC | ADS1299 · 8-channel · 24-bit · 250 SPS |
+| DSP / real-time core | STM32F407 · Cortex-M4F · 168 MHz |
+| Application core | Cortex-A53 |
+| Wireless | nRF52840 · BLE |
+| Secure element | ATECC608B |
+| Isolation | ISO7741 · galvanic isolation |
+
+For AxonOS timing and validation methodology, see:
+
+- [`RFC-0003 — Validation Status Framework`](https://github.com/AxonOS-org/axonos-rfcs/blob/main/rfcs/0003-validation-status-framework.md)
+- [`RFC-0004 — Dual-Core Real-Time Contract`](https://github.com/AxonOS-org/axonos-rfcs/blob/main/rfcs/0004-dual-core-real-time-contract.md)
+
+---
+
+## Repository structure
+
+```text
+axon-bci-gateway/
+├── README.md
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+├── CODE_OF_CONDUCT.md
+├── LICENSE
+├── NOTICE
+├── .github/workflows/ci.yml
+├── tools/
+│   └── verify_gateway_contract.py
+├── OpenBCI_GUI/
+├── GuiUnitTests/
+├── Networking-Test-Kit/
+├── images/
+├── release/
+└── tools/
+```
+
+The upstream source tree is deliberately preserved to keep future rebases tractable.
+
+---
+
+## CI philosophy
+
+This is a Processing GUI fork, not a Cargo, Maven, or Gradle project.
+
+The CI therefore checks the fork contract:
+
+1. required repository structure exists;
+2. attribution to OpenBCI is preserved;
+3. AxonOS scope is described accurately;
+4. README / NOTICE / CHANGELOG stay consistent;
+5. no clinical, regulatory, or kernel-performance overclaim is introduced.
+
+The CI does **not** attempt to compile the full Processing GUI, because that requires the Processing runtime and GUI libraries that are not part of a normal headless GitHub Actions environment.
+
+---
+
+## What this repository does not claim
+
+This repository does **not** claim:
+
+- certified medical-device readiness;
+- OpenBCI endorsement;
+- safety-critical kernel behavior;
+- measured WCET / WCRT performance;
+- regulatory compliance;
+- replacement of OpenBCI GUI;
+- ownership of upstream OpenBCI acquisition code.
+
+The intended claim is narrower:
+
+> This repository is an AxonOS-maintained integration fork of OpenBCI_GUI for hardware-in-the-loop EEG acquisition and AxonOS pipeline integration.
+
+---
+
+## Contributing
+
+Use this rule first:
+
+> Does the change belong upstream in OpenBCI_GUI, or only in the AxonOS fork?
+
+Belongs upstream:
+
+- board support;
+- GUI widget behavior;
+- acquisition bug fixes;
+- BrainFlow improvements;
+- general OpenBCI usability improvements.
+
+Belongs here:
+
+- AxonOS stream/OSC naming;
+- AxonOS documentation;
+- AxonOS reference-hardware notes;
+- CI and fork-contract checks;
+- attribution and NOTICE maintenance.
+
+See [`CONTRIBUTING.md`](./CONTRIBUTING.md).
+
+---
+
+## License and attribution
+
+This fork preserves the upstream MIT License.
+
+- Original work: OpenBCI GUI by Joel Murphy and OpenBCI contributors.
+- AxonOS fork maintenance: Denis Yermakou / AxonOS-org.
+- AxonOS modifications are listed in [`CHANGELOG.md`](./CHANGELOG.md).
+- Attribution and trademark scope are documented in [`NOTICE`](./NOTICE).
+
+This fork does not claim affiliation with, endorsement by, or sponsorship from OpenBCI, Inc.
+
+---
+
+## Contact
+
+- General / partnerships: [connect@axonos.org](mailto:connect@axonos.org)
+- Security disclosures: [security@axonos.org](mailto:security@axonos.org)
+- Maintainer: Denis Yermakou · [connect@axonos.org](mailto:connect@axonos.org)
+- Project: [axonos.org](https://axonos.org)
