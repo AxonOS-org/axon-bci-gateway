@@ -1,5 +1,9 @@
 # OpenBCI GUI Code of Conduct
 
+> **Fork notice:** This Code of Conduct is preserved from upstream OpenBCI GUI.
+> For AxonOS-specific conduct concerns, contact connect@axonos.org.
+
+
 ## Purpose
 
 It is our hope that any one is able to contribute to OpenBCI GUI regardless of their background. Thus, we hope to provide a safe, welcoming, and warmly geeky environment for everybody, regardless of gender, sexual orientation, ability, ethnicity, socioeconomic status, and religion (or lack thereof).

@@ -267,7 +267,7 @@ def check_ci_job_count() -> None:
     missing: list[str] = []
 
     for job in EXPECTED_JOBS:
-        pattern = rf"^\s{{2}}{re.escape(job)}:\s*$"
+        pattern = rf"^\s+{re.escape(job)}:\s*$"
         if re.search(pattern, text, flags=re.MULTILINE) is None:
             missing.append(job)
 
@@ -382,14 +382,19 @@ def check_standard_mapping() -> None:
 def check_path_hygiene() -> None:
     suspicious: list[str] = []
 
-    for path in ROOT.iterdir():
+    ignored_roots = {".git"}
+
+    for path in ROOT.rglob("*"):
+        if any(part in ignored_roots for part in path.parts):
+            continue
+
         name = path.name
         if name.startswith("="):
-            suspicious.append(name)
+            suspicious.append(str(path.relative_to(ROOT)))
         if '"' in name or "'" in name:
-            suspicious.append(name)
+            suspicious.append(str(path.relative_to(ROOT)))
         if name.endswith(".tar"):
-            suspicious.append(name)
+            suspicious.append(str(path.relative_to(ROOT)))
 
     if suspicious:
         fail(f"suspicious root files: {suspicious}")
