@@ -13,8 +13,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  gateway-contract:
-    name: gateway contract
+  repository-contract:
+    name: repository contract
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -24,47 +24,212 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Verify AxonOS gateway contract
-        run: python3 tools/verify_gateway_contract.py
+      - run: python3 tools/gateway_ci_checks.py repository-contract
 
-  repository-layout:
-    name: repository layout
+  required-structure:
+    name: required structure
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check fork structure
-        shell: bash
-        run: |
-          set -euo pipefail
-          test -f README.md
-          test -f CHANGELOG.md
-          test -f NOTICE
-          test -f LICENSE
-          test -f OpenBCI_GUI/OpenBCI_GUI.pde
-          test -d GuiUnitTests
-          test -d Networking-Test-Kit
-          echo "Repository layout: PASS"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
 
-  docs-contract:
-    name: documentation contract
+      - run: python3 tools/gateway_ci_checks.py required-structure
+
+  readme-surface:
+    name: README surface
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check documentation claims
-        shell: bash
-        run: |
-          set -euo pipefail
-          grep -q "integration fork" README.md
-          grep -q "OpenBCI" README.md
-          grep -q "AxonOS" README.md
-          grep -q "OpenBCI" NOTICE
-          grep -q "MIT" NOTICE
-          grep -q "connect@axonos.org" README.md
-          ! grep -q "info@axonos.org" README.md
-          ! grep -q "AxonOS-sdk" README.md
-          ! grep -q "AxonOS-kernel" README.md
-          echo "Documentation contract: PASS"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python3 tools/gateway_ci_checks.py readme-surface
+
+  attribution-notice:
+    name: attribution notice
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python3 tools/gateway_ci_checks.py attribution-notice
+
+  license-policy:
+    name: license policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python3 tools/gateway_ci_checks.py license-policy
+
+  changelog-release:
+    name: changelog release
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python3 tools/gateway_ci_checks.py changelog-release
+
+  contact-policy:
+    name: contact policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python3 tools/gateway_ci_checks.py contact-policy
+
+  overclaim-guard:
+    name: overclaim guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python3 tools/gateway_ci_checks.py overclaim-guard
+
+  workflow-integrity:
+    name: workflow integrity
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python3 tools/gateway_ci_checks.py workflow-integrity
+
+  ci-job-count:
+    name: CI job count
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python3 tools/gateway_ci_checks.py ci-job-count
+
+  markdown-quality:
+    name: markdown quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python3 tools/gateway_ci_checks.py markdown-quality
+
+  upstream-boundary:
+    name: upstream boundary
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python3 tools/gateway_ci_checks.py upstream-boundary
+
+  gateway-identifiers:
+    name: gateway identifiers
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python3 tools/gateway_ci_checks.py gateway-identifiers
+
+  reference-hardware:
+    name: reference hardware
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python3 tools/gateway_ci_checks.py reference-hardware
+
+  standard-mapping:
+    name: standard mapping
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python3 tools/gateway_ci_checks.py standard-mapping
+
+  path-hygiene:
+    name: path hygiene
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python3 tools/gateway_ci_checks.py path-hygiene
+
+  security-policy:
+    name: security policy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - run: python3 tools/gateway_ci_checks.py security-policy

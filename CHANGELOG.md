@@ -1,55 +1,65 @@
 # Changelog
 
-All notable AxonOS-fork-specific changes to this repository are documented here.
+All notable AxonOS-fork-specific changes to this project are documented here.
 
-Upstream OpenBCI GUI changes are not duplicated in this file. For upstream history, see the original OpenBCI GUI repository:
-
-<https://github.com/OpenBCI/OpenBCI_GUI>
-
-This fork uses AxonOS-specific version suffixes such as `-axonos` to separate fork metadata from upstream OpenBCI releases.
-
----
+Upstream OpenBCI GUI changes are not duplicated here. See the upstream
+OpenBCI_GUI project for upstream history.
 
 ## [Unreleased]
 
 ### Added
 
-- Repository contract verifier: `tools/verify_gateway_contract.py`.
-- CI workflow for fork-integrity, attribution, documentation, and AxonOS scope.
-- README structure aligned with the AxonOS repository family.
+- Seventeen-job repository contract CI.
+- `tools/gateway_ci_checks.py` verifier.
+- `SECURITY.md` with AxonOS security disclosure contact.
+- AxonOS Standard mapping for the gateway boundary.
 
 ### Changed
 
-- Repository positioning clarified as an integration fork, not a reimplementation.
-- Contact address standardised to `connect@axonos.org`.
-- Repository claims narrowed to hardware-in-the-loop gateway integration.
+- Rewrote README as multiline, audit-friendly Markdown.
+- Clarified that the gateway is an integration fork, not a safety-critical kernel.
+- Standardized public contact address to `connect@axonos.org`.
 
----
+### Fixed
+
+- Removed stale uppercase repository links and old personal maintainer addresses.
+- Removed overclaim-prone wording around clinical positioning and timing claims.
+- Replaced collapsed one-line workflow with readable GitHub Actions YAML.
 
 ## [v1.0.0-axonos] — 2024-Q1
 
-Initial AxonOS integration fork based on OpenBCI_GUI `v6.0.0-beta.1`.
+Initial AxonOS fork from OpenBCI_GUI `v6.0.0-beta.1`.
 
 ### Added
 
-- AxonOS fork metadata.
-- `NOTICE` file preserving upstream attribution.
-- AxonOS reference-hardware notes.
-- AxonOS documentation pointers.
-- CI scaffolding for documentation and fork-integrity checks.
+- `NOTICE` file with attribution to OpenBCI upstream and AxonOS-side
+  modifications.
+- `CHANGELOG.md` tracking AxonOS-specific diff.
+- AxonOS reference-hardware compatibility table in README.
+- AxonOS stream and OSC naming conventions.
 
 ### Changed
 
-- Integration naming conventions:
-  - LSL stream identifier: `axonos-gateway`
-  - OSC base namespace: `/axonos`
-- Documentation and About text updated to reference AxonOS integration scope.
+- LSL stream identifier convention: `OpenBCI_EEG` → `axonos-gateway`.
+- OSC base namespace convention: `/openbci` → `/axonos`.
+- Documentation updated to describe the gateway as an AxonOS acquisition
+  boundary.
 
 ### Preserved
 
-- OpenBCI signal acquisition logic.
-- OpenBCI hardware communication logic.
-- OpenBCI GUI structure.
+- Signal acquisition logic.
+- Hardware communication code.
+- GUI widget behavior.
 - BrainFlow integration.
-- Upstream MIT License.
-- Upstream copyright notices.
+- Upstream MIT license.
+- Upstream OpenBCI attribution.
+
+## Versioning policy
+
+| Tag | Meaning |
+|---|---|
+| `vX.Y.Z` | upstream OpenBCI_GUI release where preserved verbatim |
+| `vX.Y.Z-axonos` | AxonOS fork release based on upstream version |
+| `vX.Y.Z-axonos.N` | Nth AxonOS-side patch on top of the fork release |
+
+Maintainer: Denis Yermakou / AxonOS-org.

@@ -1,53 +1,55 @@
 AxonOS BCI Gateway
 ==================
 
-This repository is an integration fork of OpenBCI_GUI maintained by AxonOS-org.
+This repository is an integration fork of OpenBCI_GUI maintained by AxonOS-org
+for hardware-in-the-loop EEG acquisition and AxonOS pipeline testing.
 
 Upstream attribution
 --------------------
 
-Original work: OpenBCI_GUI
-Upstream repository: https://github.com/OpenBCI/OpenBCI_GUI
-Base version: v6.0.0-beta.1
-Original author: Joel Murphy and the OpenBCI contributors
+Original work: OpenBCI_GUI v6.0.0-beta.1  
+Upstream project: https://github.com/OpenBCI/OpenBCI_GUI  
+Original author: Joel Murphy and OpenBCI contributors  
 Original license: MIT
 
-All signal acquisition, board communication, GUI behavior, and BrainFlow integration in this repository originate from the OpenBCI project and its contributors unless explicitly marked as an AxonOS-side modification.
+All signal acquisition, hardware communication, GUI behavior, and BrainFlow
+integration remain upstream OpenBCI work.
 
-AxonOS fork maintenance
------------------------
+AxonOS modifications
+--------------------
 
-Maintainer: Denis Yermakou
-Project: AxonOS
-Website: https://axonos.org
-GitHub organization: https://github.com/AxonOS-org
+AxonOS-side modifications are limited to integration touchpoints:
 
-AxonOS-side modifications are limited to fork metadata, documentation, integration identifiers, reference-hardware notes, and CI/fork-contract checks. These modifications are licensed under the same MIT License as the upstream work.
+- LSL stream identifier convention: `axonos-gateway`;
+- OSC base namespace convention: `/axonos`;
+- AxonOS documentation pointers;
+- reference-hardware compatibility notes;
+- attribution and fork-maintenance metadata;
+- CI checks that verify the fork contract.
 
-Trademark and affiliation notice
---------------------------------
+The AxonOS modifications are licensed under the same MIT License as the upstream
+work.
 
-"OpenBCI" is a trademark of OpenBCI, Inc. This fork does not claim affiliation with, endorsement by, or sponsorship from OpenBCI, Inc.
+Trademark and endorsement
+-------------------------
 
-"AxonOS" refers to the AxonOS neurotechnology software infrastructure project maintained by Denis Yermakou / AxonOS-org.
+OpenBCI is a trademark of OpenBCI, Inc.
 
-Permission is granted to use the name "AxonOS BCI Gateway" to refer to this repository and unmodified releases of this fork. Modified distributions should use a distinct name to avoid confusion.
+This fork does not claim affiliation with, endorsement by, or sponsorship from
+OpenBCI, Inc. The OpenBCI name is used only to identify and attribute the
+upstream work.
 
-Third-party Processing libraries
---------------------------------
+AxonOS is maintained by Denis Yermakou / AxonOS-org.
 
-This gateway depends on Processing libraries that are installed separately by the user through the Processing IDE:
+Scope
+-----
 
-- ControlP5
-- G4P
-- gwoptics
-- BrainFlow
-
-Their licenses are governed by their respective upstream projects.
+This NOTICE applies only to the contents of the `axon-bci-gateway` repository.
+Other AxonOS repositories may use different licenses and claim scopes.
 
 Contact
 -------
 
-General / partnerships: connect@axonos.org
-Security disclosures: security@axonos.org
-Maintainer: connect@axonos.org
+General: connect@axonos.org  
+Security: security@axonos.org  
+Project: https://axonos.org
