@@ -7,14 +7,22 @@
 
 **OpenBCI GUI integration fork for AxonOS hardware-in-the-loop EEG acquisition and pipeline testing.**
 
-`axon-bci-gateway` sits at the acquisition boundary of the AxonOS stack. It
-preserves the upstream OpenBCI GUI structure and limits AxonOS-specific changes
-to integration touchpoints: stream naming, OSC namespace, documentation,
-attribution, reference-hardware notes, and fork-integrity CI.
+`axon-bci-gateway` sits at the acquisition boundary of the AxonOS stack.
 
-This repository is not a rewrite of OpenBCI GUI. Signal acquisition, hardware
-communication, GUI behavior, and BrainFlow integration remain upstream OpenBCI
-work under the MIT License.
+It preserves the upstream OpenBCI GUI structure and limits AxonOS-specific
+changes to integration touchpoints:
+
+- stream naming;
+- OSC namespace;
+- documentation;
+- attribution;
+- reference-hardware notes;
+- fork-integrity CI.
+
+This repository is not a rewrite of OpenBCI GUI.
+
+Signal acquisition, hardware communication, GUI behavior, and BrainFlow
+integration remain upstream OpenBCI work under the MIT License.
 
 ## Position in the AxonOS stack
 
@@ -30,8 +38,8 @@ intelligent applications.
 | Consent layer | `axonos-consent` | runtime consent and safety-state semantics |
 | Acquisition gateway | `axon-bci-gateway` | OpenBCI GUI integration fork for EEG input |
 
-The gateway lets AxonOS interact with real acquisition tools without pretending
-that the gateway itself is the safety-critical kernel.
+The gateway lets AxonOS interact with real acquisition tools without presenting
+the gateway itself as the safety-critical kernel.
 
 ## Scope
 
@@ -50,8 +58,8 @@ Out of scope:
 - modifying board communication logic;
 - changing GUI widgets unrelated to AxonOS integration;
 - claiming regulatory or clinical readiness;
-- claiming kernel timing performance;
-- claiming that this fork is endorsed by OpenBCI, Inc.
+- claiming kernel timing performance from this gateway;
+- claiming endorsement by OpenBCI, Inc.
 
 If a change improves OpenBCI GUI generally, it belongs upstream first.
 
@@ -62,10 +70,16 @@ If a change improves OpenBCI GUI generally, it belongs upstream first.
 | Acquisition boundary | the fork preserves upstream OpenBCI GUI acquisition paths |
 | AxonOS identity | integration uses explicit stream and OSC naming conventions |
 | Attribution | upstream OpenBCI authorship and MIT licensing remain visible |
-| No safety overclaim | timing, clinical, and regulatory claims are not made here |
+| No safety overclaim | timing, clinical, regulatory, and kernel-performance claims are not made here |
 | Fork hygiene | CI verifies structure, attribution, docs, and AxonOS scope |
 
-This is an integration gateway, not a certified medical-device component and not a hard real-time kernel.
+This is an integration gateway.
+
+It is not a certified component.
+
+It is not a hard real-time kernel.
+
+It is not a replacement for OpenBCI GUI.
 
 ## Quick start
 
@@ -91,7 +105,7 @@ Then open in Processing:
 OpenBCI_GUI/OpenBCI_GUI.pde
 ```
 
-Run with `Ctrl+R` / `Cmd+R`.
+Run with `Ctrl+R` or `Cmd+R`.
 
 When running with AxonOS integration configuration, downstream consumers should
 expect:
@@ -170,13 +184,13 @@ tractable.
 This is a Processing GUI fork, not a Cargo, Maven, Gradle, or Rust kernel
 project.
 
-The CI therefore checks the fork contract:
+The CI checks the fork contract:
 
 1. required repository structure exists;
 2. attribution to OpenBCI is preserved;
 3. AxonOS scope is described accurately;
 4. README, NOTICE, CHANGELOG, and SECURITY stay consistent;
-5. no clinical, regulatory, or kernel-performance overclaim is introduced;
+5. clinical, regulatory, and kernel-performance overclaims are not introduced;
 6. workflow and repository metadata remain readable.
 
 The CI does not attempt to compile the full Processing GUI, because that requires
@@ -187,10 +201,9 @@ GitHub Actions environment.
 
 This repository does not claim:
 
-- certified medical-device readiness;
+- production safety status;
 - OpenBCI endorsement;
 - safety-critical kernel behavior;
-- kernel timing performance claims;
 - regulatory compliance;
 - replacement of OpenBCI GUI;
 - ownership of upstream OpenBCI acquisition code.
@@ -216,13 +229,11 @@ Belongs upstream:
 
 Belongs here:
 
-- AxonOS stream/OSC naming;
+- AxonOS stream and OSC naming;
 - AxonOS documentation;
 - AxonOS reference-hardware notes;
 - CI and fork-contract checks;
 - attribution and NOTICE maintenance.
-
-See `CONTRIBUTING.md`.
 
 ## License and attribution
 
@@ -238,6 +249,8 @@ OpenBCI, Inc.
 
 ## Contact
 
-General: connect@axonos.org  
-Security disclosures: security@axonos.org  
+General: connect@axonos.org
+
+Security disclosures: security@axonos.org
+
 Project: https://axonos.org

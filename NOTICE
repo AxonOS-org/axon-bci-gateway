@@ -7,9 +7,12 @@ for hardware-in-the-loop EEG acquisition and AxonOS pipeline testing.
 Upstream attribution
 --------------------
 
-Original work: OpenBCI_GUI v6.0.0-beta.1  
-Upstream project: https://github.com/OpenBCI/OpenBCI_GUI  
-Original author: Joel Murphy and OpenBCI contributors  
+Original work: OpenBCI_GUI v6.0.0-beta.1
+
+Upstream project: https://github.com/OpenBCI/OpenBCI_GUI
+
+Original author: Joel Murphy and OpenBCI contributors
+
 Original license: MIT
 
 All signal acquisition, hardware communication, GUI behavior, and BrainFlow
@@ -50,6 +53,8 @@ Other AxonOS repositories may use different licenses and claim scopes.
 Contact
 -------
 
-General: connect@axonos.org  
-Security: security@axonos.org  
+General: connect@axonos.org
+
+Security: security@axonos.org
+
 Project: https://axonos.org

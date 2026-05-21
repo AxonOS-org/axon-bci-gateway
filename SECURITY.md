@@ -12,6 +12,7 @@ Relevant issues include:
 - dependency or supply-chain concerns;
 - incorrect attribution or license preservation that could affect redistribution.
 
-Please do not include raw neural data in the initial report. Describe the issue,
-affected version, reproduction steps, and whether the behavior also reproduces in
-upstream OpenBCI GUI.
+Please do not include raw neural data in the initial report.
+
+Describe the issue, affected version, reproduction steps, and whether the
+behavior also reproduces in upstream OpenBCI GUI.

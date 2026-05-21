@@ -13,18 +13,20 @@ OpenBCI_GUI project for upstream history.
 - `tools/gateway_ci_checks.py` verifier.
 - `SECURITY.md` with AxonOS security disclosure contact.
 - AxonOS Standard mapping for the gateway boundary.
+- Line-count guards for README, workflow, and checker integrity.
 
 ### Changed
 
 - Rewrote README as multiline, audit-friendly Markdown.
-- Clarified that the gateway is an integration fork, not a safety-critical kernel.
+- Clarified that the gateway is an integration fork.
 - Standardized public contact address to `connect@axonos.org`.
+- Replaced collapsed one-line workflow with readable GitHub Actions YAML.
 
 ### Fixed
 
 - Removed stale uppercase repository links and old personal maintainer addresses.
-- Removed overclaim-prone wording around clinical positioning and timing claims.
-- Replaced collapsed one-line workflow with readable GitHub Actions YAML.
+- Removed overclaim-prone wording around public safety and timing claims.
+- Reduced risk that public gateway docs imply kernel-level safety status.
 
 ## [v1.0.0-axonos] — 2024-Q1
 
@@ -40,8 +42,8 @@ Initial AxonOS fork from OpenBCI_GUI `v6.0.0-beta.1`.
 
 ### Changed
 
-- LSL stream identifier convention: `OpenBCI_EEG` → `axonos-gateway`.
-- OSC base namespace convention: `/openbci` → `/axonos`.
+- LSL stream identifier convention: `OpenBCI_EEG` to `axonos-gateway`.
+- OSC base namespace convention: `/openbci` to `/axonos`.
 - Documentation updated to describe the gateway as an AxonOS acquisition
   boundary.
 

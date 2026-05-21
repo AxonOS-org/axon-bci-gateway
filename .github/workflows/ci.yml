@@ -18,218 +18,269 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py repository-contract
+      - name: Run repository contract
+        run: python3 tools/gateway_ci_checks.py repository-contract
 
   required-structure:
     name: required structure
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py required-structure
+      - name: Run required structure
+        run: python3 tools/gateway_ci_checks.py required-structure
 
   readme-surface:
     name: README surface
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py readme-surface
+      - name: Run README surface
+        run: python3 tools/gateway_ci_checks.py readme-surface
 
   attribution-notice:
     name: attribution notice
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py attribution-notice
+      - name: Run attribution notice
+        run: python3 tools/gateway_ci_checks.py attribution-notice
 
   license-policy:
     name: license policy
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py license-policy
+      - name: Run license policy
+        run: python3 tools/gateway_ci_checks.py license-policy
 
   changelog-release:
     name: changelog release
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py changelog-release
+      - name: Run changelog release
+        run: python3 tools/gateway_ci_checks.py changelog-release
 
   contact-policy:
     name: contact policy
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py contact-policy
+      - name: Run contact policy
+        run: python3 tools/gateway_ci_checks.py contact-policy
 
   overclaim-guard:
     name: overclaim guard
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py overclaim-guard
+      - name: Run overclaim guard
+        run: python3 tools/gateway_ci_checks.py overclaim-guard
 
   workflow-integrity:
     name: workflow integrity
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py workflow-integrity
+      - name: Run workflow integrity
+        run: python3 tools/gateway_ci_checks.py workflow-integrity
 
   ci-job-count:
     name: CI job count
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py ci-job-count
+      - name: Run CI job count
+        run: python3 tools/gateway_ci_checks.py ci-job-count
 
   markdown-quality:
     name: markdown quality
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py markdown-quality
+      - name: Run markdown quality
+        run: python3 tools/gateway_ci_checks.py markdown-quality
 
   upstream-boundary:
     name: upstream boundary
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py upstream-boundary
+      - name: Run upstream boundary
+        run: python3 tools/gateway_ci_checks.py upstream-boundary
 
   gateway-identifiers:
     name: gateway identifiers
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py gateway-identifiers
+      - name: Run gateway identifiers
+        run: python3 tools/gateway_ci_checks.py gateway-identifiers
 
   reference-hardware:
     name: reference hardware
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py reference-hardware
+      - name: Run reference hardware
+        run: python3 tools/gateway_ci_checks.py reference-hardware
 
   standard-mapping:
     name: standard mapping
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py standard-mapping
+      - name: Run standard mapping
+        run: python3 tools/gateway_ci_checks.py standard-mapping
 
   path-hygiene:
     name: path hygiene
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py path-hygiene
+      - name: Run path hygiene
+        run: python3 tools/gateway_ci_checks.py path-hygiene
 
   security-policy:
     name: security policy
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - run: python3 tools/gateway_ci_checks.py security-policy
+      - name: Run security policy
+        run: python3 tools/gateway_ci_checks.py security-policy
