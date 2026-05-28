@@ -1,9 +1,11 @@
 # AxonOS BCI Gateway
 
 [![CI](https://github.com/AxonOS-org/axon-bci-gateway/actions/workflows/ci.yml/badge.svg)](https://github.com/AxonOS-org/axon-bci-gateway/actions/workflows/ci.yml)
-![License](https://img.shields.io/badge/license-MIT-blue)
-![Status](https://img.shields.io/badge/status-integration--fork-lightgrey)
-![Runtime](https://img.shields.io/badge/runtime-Processing%20%2F%20Java-006699)
+[![Standard](https://img.shields.io/badge/Standard-v1.0.0-0a4a8f?style=flat-square)](https://github.com/AxonOS-org/axonos-standard)
+[![Role](https://img.shields.io/badge/Role-acquisition%20gateway-0a4a8f?style=flat-square)](#position-in-the-axonos-stack)
+[![Upstream](https://img.shields.io/badge/Upstream-OpenBCI%20GUI-475569?style=flat-square)](https://github.com/OpenBCI/OpenBCI_GUI)
+[![Runtime](https://img.shields.io/badge/Runtime-Processing%20%2F%20Java-475569?style=flat-square)](https://processing.org/)
+[![License](https://img.shields.io/badge/License-MIT-475569?style=flat-square)](#license-and-attribution)
 
 **OpenBCI GUI integration fork for AxonOS hardware-in-the-loop EEG acquisition and pipeline testing.**
 
@@ -31,12 +33,13 @@ intelligent applications.
 
 | Layer | Repository | Role |
 |---|---|---|
-| Standard | `axonos-standard` | draft standard, evidence vocabulary, validation discipline |
-| Kernel substrate | `axonos-kernel` | real-time scheduling, bounded IPC, monotonic time |
-| RFCs | `axonos-rfcs` | engineering contracts and design records |
-| SDK boundary | `axonos-sdk` | typed intent and capability boundary |
-| Consent layer | `axonos-consent` | runtime consent and safety-state semantics |
-| Acquisition gateway | `axon-bci-gateway` | OpenBCI GUI integration fork for EEG input |
+| Canonical standard | [`axonos-standard`](https://github.com/AxonOS-org/axonos-standard) | Architecture manual, conformance criteria, validation taxonomy |
+| Engineering RFCs | [`axonos-rfcs`](https://github.com/AxonOS-org/axonos-rfcs) | Numbered design proposals; normative once finalised |
+| Kernel substrate | [`axonos-kernel`](https://github.com/AxonOS-org/axonos-kernel) | Real-time scheduling, bounded IPC, monotonic time |
+| Application boundary | [`axonos-sdk`](https://github.com/AxonOS-org/axonos-sdk) | Typed intents, manifests, ABI-compatible integration |
+| Consent layer | [`axonos-consent`](https://github.com/AxonOS-org/axonos-consent) | Deterministic consent state machine and stimulation-gating protocol |
+| Mesh coordination | [`axonos-swarm`](https://github.com/AxonOS-org/axonos-swarm) | Distributed timing, co-availability, peer health monitoring |
+| **Acquisition gateway** | **`axon-bci-gateway`** | OpenBCI GUI integration fork for EEG input (this repository) |
 
 The gateway lets AxonOS interact with real acquisition tools without presenting
 the gateway itself as the safety-critical kernel.
@@ -254,3 +257,17 @@ General: connect@axonos.org
 Security disclosures: security@axonos.org
 
 Project: https://axonos.org
+
+---
+
+<div align="center">
+
+**The AxonOS Project** &nbsp;·&nbsp; [axonos.org](https://axonos.org) &nbsp;·&nbsp; [connect@axonos.org](mailto:connect@axonos.org) &nbsp;·&nbsp; [security@axonos.org](mailto:security@axonos.org)
+
+[github.com/AxonOS-org](https://github.com/AxonOS-org) &nbsp;·&nbsp; [medium.com/@AxonOS](https://medium.com/@AxonOS)
+
+<sub>Singapore · Zurich · Berlin · Milano · San Mateo</sub>
+
+<sub>Acquisition-boundary integration fork · OpenBCI GUI (MIT) preserved upstream · not affiliated with OpenBCI, Inc.</sub>
+
+</div>

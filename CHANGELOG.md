@@ -21,6 +21,20 @@ OpenBCI_GUI project for upstream history.
 - Clarified that the gateway is an integration fork.
 - Standardized public contact address to `connect@axonos.org`.
 - Replaced collapsed one-line workflow with readable GitHub Actions YAML.
+- Aligned README badges to the canonical AxonOS palette (AxonOS blue for
+  Standard/Role, slate for Upstream/Runtime/License; no Rust badge — this
+  fork is Processing/Java, not Rust).
+- Completed the "Position in the AxonOS stack" table: added `axonos-swarm`,
+  linked every repository, and corrected the standard to canonical v1.0.0.
+- Added the canonical centered AxonOS footer (five-city locator, OpenBCI
+  attribution, non-affiliation disclaimer).
+
+### Removed
+
+- `AXONOS.md` — its purpose (explaining the fork's AxonOS role) is now fully
+  served by the README, and its central statement that the upstream README is
+  "retained unchanged" was no longer true once the README became a full
+  AxonOS-aware rewrite. The README is now the single source of AxonOS context.
 
 ### Fixed
 
