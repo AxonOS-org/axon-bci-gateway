@@ -42,7 +42,7 @@ OpenBCI_GUI project for upstream history.
 - Removed overclaim-prone wording around public safety and timing claims.
 - Reduced risk that public gateway docs imply kernel-level safety status.
 
-## [v1.0.0-axonos] — 2024-Q1
+## [v1.0.0-axonos] — 2025
 
 Initial AxonOS fork from OpenBCI_GUI `v6.0.0-beta.1`.
 
