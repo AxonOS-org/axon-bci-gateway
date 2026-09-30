@@ -266,8 +266,6 @@ Project: https://axonos.org
 
 [github.com/AxonOS-org](https://github.com/AxonOS-org) &nbsp;·&nbsp; [medium.com/@AxonOS](https://medium.com/@AxonOS)
 
-<sub>Singapore · Zurich · Berlin · Milano · San Mateo</sub>
-
 <sub>Acquisition-boundary integration fork · OpenBCI GUI (MIT) preserved upstream · not affiliated with OpenBCI, Inc.</sub>
 
 </div>
