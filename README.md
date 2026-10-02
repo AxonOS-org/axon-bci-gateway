@@ -6,6 +6,7 @@
 [![Upstream](https://img.shields.io/badge/Upstream-OpenBCI%20GUI-475569?style=flat-square)](https://github.com/OpenBCI/OpenBCI_GUI)
 [![Runtime](https://img.shields.io/badge/Runtime-Processing%20%2F%20Java-475569?style=flat-square)](https://processing.org/)
 [![License](https://img.shields.io/badge/License-MIT-475569?style=flat-square)](#license-and-attribution)
+[![AxonOS Radar](https://img.shields.io/badge/AxonOS%20Radar-open%20neurotech%20map-1f8fae?style=flat-square&labelColor=0b1220)](https://axonos-bci.github.io/axonos-community-radar/)
 
 **OpenBCI GUI integration fork for AxonOS hardware-in-the-loop EEG acquisition and pipeline testing.**
 
